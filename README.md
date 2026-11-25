@@ -1,10 +1,23 @@
+<div align="center">
+
+<img src="assets/logo.webp" width="180" alt="Logo dourado do Oro Café">
+
 # ☕ Oro Café
 
-> O valor dos pequenos momentos.
+**O valor dos pequenos momentos.**
+
+<img alt="PROJETO ACADÊMICO" src="https://img.shields.io/static/v1?label=&amp;message=PROJETO%20ACAD%C3%8AMICO&amp;color=061426&amp;style=for-the-badge">
+<img alt="FRONT-END" src="https://img.shields.io/static/v1?label=&amp;message=FRONT-END&amp;color=B78A42&amp;style=for-the-badge">
+<img alt="JAVASCRIPT PURO" src="https://img.shields.io/static/v1?label=&amp;message=JAVASCRIPT%20PURO&amp;color=E7B96A&amp;style=for-the-badge&amp;logo=javascript&amp;logoColor=061426">
+
+<a href="https://hildebertosampaiojr-bot.github.io/Cafeteria---Trabalho-javascript/"><img alt="ACESSAR DEMONSTRAÇÃO" src="https://img.shields.io/static/v1?label=&amp;message=ACESSAR%20DEMONSTRA%C3%87%C3%83O&amp;color=946B31&amp;style=for-the-badge&amp;logo=githubpages&amp;logoColor=white"></a>
+<a href="#-como-executar-localmente"><img alt="EXECUTAR LOCALMENTE" src="https://img.shields.io/static/v1?label=&amp;message=EXECUTAR%20LOCALMENTE&amp;color=061426&amp;style=for-the-badge&amp;logo=visualstudiocode&amp;logoColor=white"></a>
+
+</div>
+
+---
 
 Projeto acadêmico de JavaScript que simula a experiência digital de uma cafeteria fictícia, reunindo cardápio interativo, carrinho de compras, acompanhamento de pedidos e jogos personalizados.
-
-[**Acessar o site online**](https://hildebertosampaiojr-bot.github.io/Cafeteria---Trabalho-javascript/)
 
 ## 🎯 Objetivo
 
@@ -12,19 +25,35 @@ Aplicar conceitos de desenvolvimento web front-end e lógica de programação em
 
 ## 🛠️ Tecnologias utilizadas
 
+<div align="center">
+
+<img alt="HTML5" src="https://img.shields.io/static/v1?label=&amp;message=HTML5&amp;color=E34F26&amp;style=flat-square&amp;logo=html5&amp;logoColor=white">
+<img alt="CSS3" src="https://img.shields.io/static/v1?label=&amp;message=CSS3&amp;color=1572B6&amp;style=flat-square&amp;logo=css3&amp;logoColor=white">
+<img alt="JavaScript" src="https://img.shields.io/static/v1?label=&amp;message=JavaScript&amp;color=F7DF1E&amp;style=flat-square&amp;logo=javascript&amp;logoColor=202020">
+<img alt="DOM API" src="https://img.shields.io/static/v1?label=&amp;message=DOM%20API&amp;color=5965A9&amp;style=flat-square">
+<img alt="Canvas 2D API" src="https://img.shields.io/static/v1?label=&amp;message=Canvas%202D%20API&amp;color=8B5CF6&amp;style=flat-square">
+<img alt="Web Animations API" src="https://img.shields.io/static/v1?label=&amp;message=Web%20Animations%20API&amp;color=B45309&amp;style=flat-square">
+<img alt="Web Storage API" src="https://img.shields.io/static/v1?label=&amp;message=Web%20Storage%20API&amp;color=0F766E&amp;style=flat-square">
+<img alt="WebP" src="https://img.shields.io/static/v1?label=&amp;message=WebP&amp;color=4285F4&amp;style=flat-square">
+<img alt="Git" src="https://img.shields.io/static/v1?label=&amp;message=Git&amp;color=F05032&amp;style=flat-square&amp;logo=git&amp;logoColor=white">
+<img alt="GitHub" src="https://img.shields.io/static/v1?label=&amp;message=GitHub&amp;color=24292F&amp;style=flat-square&amp;logo=github&amp;logoColor=white">
+<img alt="GitHub Pages" src="https://img.shields.io/static/v1?label=&amp;message=GitHub%20Pages&amp;color=087F5B&amp;style=flat-square&amp;logo=githubpages&amp;logoColor=white">
+
+</div>
+
 | Tecnologia | Aplicação no projeto |
 | --- | --- |
-| HTML5 | Estrutura semântica, seções, formulários, diálogos, SVG e elemento Canvas. |
-| CSS3 | Identidade visual, variáveis CSS, Grid, Flexbox, responsividade, transições e animações. |
-| JavaScript (Vanilla JS) | Cardápio, filtros, carrinho, cálculos, navegação, pedidos e lógica dos jogos. |
-| DOM API | Eventos, seleção e criação de elementos, atualização de conteúdo e atributos. |
-| Canvas 2D API | Desenho do tabuleiro, cobrinha e grãos de café. |
-| Web Animations API | Transição circular entre as telas com `Element.animate()`. |
-| Web Storage API | Uso de `localStorage` para armazenar o recorde da cobrinha. |
-| Git | Controle de versões do código-fonte. |
-| GitHub | Hospedagem e gerenciamento do repositório. |
-| GitHub Pages | Publicação estática do site. |
-| WebP | Formato das imagens da marca e dos produtos, armazenadas na pasta `assets/`. |
+| **HTML5** | Estrutura semântica, seções, formulários, diálogos, SVG e elemento Canvas. |
+| **CSS3** | Identidade visual, variáveis CSS, Grid, Flexbox, responsividade, transições e animações. |
+| **JavaScript (Vanilla JS)** | Cardápio, filtros, carrinho, cálculos, navegação, pedidos e lógica dos jogos. |
+| **DOM API** | Eventos, seleção e criação de elementos, atualização de conteúdo e atributos. |
+| **Canvas 2D API** | Desenho do tabuleiro, cobrinha e grãos de café. |
+| **Web Animations API** | Transição circular entre as telas com `Element.animate()`. |
+| **Web Storage API** | Uso de `localStorage` para armazenar o recorde da cobrinha. |
+| **Git** | Controle de versões do código-fonte. |
+| **GitHub** | Hospedagem e gerenciamento do repositório. |
+| **GitHub Pages** | Publicação estática do site. |
+| **WebP** | Formato das imagens da marca e dos produtos, armazenadas na pasta `assets/`. |
 
 Toda a aplicação funciona com HTML, CSS e JavaScript puro, sem frameworks, dependências externas ou etapa de compilação.
 
@@ -36,6 +65,12 @@ Toda a aplicação funciona com HTML, CSS e JavaScript puro, sem frameworks, dep
 - Filtros por categoria: todos, bebidas e comidas.
 - Cartões expansíveis por mouse, toque ou teclado.
 - Confirmação temporária ao adicionar um produto à sacola.
+
+<div align="center">
+  <img src="assets/cappuccino.webp" alt="Cappuccino" width="120">
+  <img src="assets/croissant.webp" alt="Croissant" width="120">
+  <img src="assets/brownie.webp" alt="Brownie" width="120">
+</div>
 
 ### Sacola e carrinho
 
@@ -67,6 +102,14 @@ Enquanto aguarda, o cliente pode escolher um dos dois jogos:
 A cobrinha pode ser controlada pelas setas, pelas teclas WASD ou pelos botões direcionais na tela.
 
 ## 🎨 Identidade visual
+
+<div align="center">
+
+<img alt="AZUL-MARINHO · 061426" src="https://img.shields.io/static/v1?label=&amp;message=AZUL-MARINHO%20%C2%B7%20061426&amp;color=061426&amp;style=for-the-badge">
+<img alt="DOURADO · E7B96A" src="https://img.shields.io/static/v1?label=&amp;message=DOURADO%20%C2%B7%20E7B96A&amp;color=B78A42&amp;style=for-the-badge">
+<img alt="CREME · F8F1E4" src="https://img.shields.io/static/v1?label=&amp;message=CREME%20%C2%B7%20F5F2EC&amp;color=F8F1E4&amp;style=for-the-badge">
+
+</div>
 
 A interface apresenta uma combinação de azul-marinho, dourado e tons claros, com uma proposta visual inspirada em cafeterias de cafés especiais e confeitaria artesanal.
 
@@ -117,6 +160,12 @@ flowchart TD
     G --> H[Acompanhar pedido]
     H --> I[Caça ao Ouro]
     H --> J[Cobrinha do Café]
+    classDef base fill:#061426,stroke:#B78A42,color:#F8F1E4;
+    classDef order fill:#E7B96A,stroke:#B78A42,color:#061426;
+    classDef game fill:#20394E,stroke:#E7B96A,color:#F8F1E4;
+    class A,B,C,D,E,F base;
+    class G,H order;
+    class I,J game;
 ```
 
 ## 🚀 Como executar localmente
@@ -149,4 +198,12 @@ Conheça também **[Lâmpada Funcional](https://github.com/hildebertosampaiojr-b
 
 ---
 
-Projeto educacional de desenvolvimento web front-end.
+<div align="center">
+
+<img alt="DESENVOLVIMENTO WEB" src="https://img.shields.io/static/v1?label=&amp;message=DESENVOLVIMENTO%20WEB&amp;color=B78A42&amp;style=flat-square"> <img alt="PROJETO EDUCACIONAL" src="https://img.shields.io/static/v1?label=&amp;message=PROJETO%20EDUCACIONAL&amp;color=061426&amp;style=flat-square">
+
+**Desenvolvimento web front-end · Trabalho acadêmico**
+
+[Voltar ao topo](#-oro-café)
+
+</div>
