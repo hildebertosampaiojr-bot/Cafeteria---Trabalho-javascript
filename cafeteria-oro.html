@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Oro Café | Cafés especiais &amp; Pâtisserie</title>
+    <meta name="description" content="Cardápio digital do Oro Café, com pedidos demonstrativos e jogos.">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="script.js" defer>
+    </script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="#inicio">
+        <img class="header-logo" src="assets/logo.webp" alt="Oro Café"/>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a data-tab="inicio" href="#inicio">Início</a>
+        <a data-tab="menu" href="#menu">Cardápio</a>
+        <a data-tab="acompanhar" href="#acompanhar">Acompanhar pedido</a>
+      </nav>
+      <button class="order-button" data-action="open-cart" aria-label="Abrir meu pedido">
+        <span class="bag-wrap">
+          <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 8h14l1.5 13h-17L5 8z"/>
+            <path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+          </svg>
+          <span id="count" aria-live="polite" hidden>0</span>
+        </span>
+      </button>
+    </header>
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-logo">
+          <img class="main-logo" src="assets/logo.webp" alt="Oro Café"/>
+        </div>
+        <div class="story">
+          <span class="kicker">Nossa história · O valor dos pequenos momentos</span>
+          <h1>Há ouro nos<em> pequenos momentos.</em>
+          </h1>
+          <p>O Oro Café nasceu de uma ideia simples: transformar a pausa de todos os dias em algo extraordinário. Tudo começou com o aroma de um café recém-passado e a vontade de criar um lugar onde o tempo pudesse desacelerar.</p>
+          <p>Inspirados pela riqueza dos grãos brasileiros e pela delicadeza da confeitaria artesanal, imaginamos uma casa onde cada xícara conta uma história e cada encontro merece ser celebrado.</p>
+          <p>Hoje, convidamos você a descobrir o sabor desses pequenos tesouros. Sua próxima pausa começa aqui.</p>
+          <a class="cta" href="#menu">Conheça nosso cardápio <span>→</span>
+          </a>
+        </div>
+      </section>
+      <section id="menu" hidden>
+        <div class="section-head">
+          <div class="menu-heading">
+            <img class="menu-logo" src="assets/logo.webp" alt="Oro Café"/>
+            <h2>Nosso cardápio</h2>
+            <div class="ornament">
+              <span>❦</span>
+            </div>
+          </div>
+          <div class="filters">
+            <button class="active" aria-pressed="true" data-action="filter" data-category="Todos">Todos</button>
+            <button aria-pressed="false" data-action="filter" data-category="Bebidas">Bebidas</button>
+            <button aria-pressed="false" data-action="filter" data-category="Comidas">Comidas</button>
+          </div>
+        </div>
+        <p class="menu-hint">Passe o mouse ou toque em um produto para descobrir seu sabor.</p>
+        <div class="menu">
+          <article data-cat="Comidas" data-price="12">
+            <div class="product-art">
+              <img alt="Brownie" src="assets/brownie.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Brownie</h3>
+              <small>Chocolate intenso</small>
+              <div class="price">
+                <b>R$ 12,00</b>
+                <button aria-label="Adicionar Brownie" data-action="add-product" data-index="0">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Comidas" data-price="14">
+            <div class="product-art">
+              <img alt="Croissant" src="assets/croissant.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Croissant</h3>
+              <small>Manteiga · artesanal</small>
+              <div class="price">
+                <b>R$ 14,00</b>
+                <button aria-label="Adicionar Croissant" data-action="add-product" data-index="1">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Comidas" data-price="22">
+            <div class="product-art">
+              <img alt="Cheesecake" src="assets/cheesecake.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Cheesecake</h3>
+              <small>Frutas vermelhas</small>
+              <div class="price">
+                <b>R$ 22,00</b>
+                <button aria-label="Adicionar Cheesecake" data-action="add-product" data-index="2">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Bebidas" data-price="15">
+            <div class="product-art">
+              <img alt="Cappuccino" src="assets/cappuccino.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Cappuccino</h3>
+              <small>Cremoso · canela</small>
+              <div class="price">
+                <b>R$ 15,00</b>
+                <button aria-label="Adicionar Cappuccino" data-action="add-product" data-index="3">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Bebidas" data-price="18">
+            <div class="product-art">
+              <img alt="Latte gelado de baunilha" src="assets/latte-gelado-de-baunilha.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Latte gelado de baunilha</h3>
+              <small>Café · leite · gelo</small>
+              <div class="price">
+                <b>R$ 18,00</b>
+                <button aria-label="Adicionar Latte gelado de baunilha" data-action="add-product" data-index="4">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Comidas" data-price="24">
+            <div class="product-art">
+              <img alt="Brioche com ovos" src="assets/brioche-com-ovos.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Brioche com ovos</h3>
+              <small>Ovos cremosos · queijo</small>
+              <div class="price">
+                <b>R$ 24,00</b>
+                <button aria-label="Adicionar Brioche com ovos" data-action="add-product" data-index="5">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Bebidas" data-price="9">
+            <div class="product-art">
+              <img alt="Espresso" src="assets/espresso.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Espresso</h3>
+              <small>Café intenso · crema</small>
+              <div class="price">
+                <b>R$ 9,00</b>
+                <button aria-label="Adicionar Espresso" data-action="add-product" data-index="6">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Bebidas" data-price="19">
+            <div class="product-art">
+              <img alt="Mocha" src="assets/mocha.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Mocha</h3>
+              <small>Chocolate · espresso · leite</small>
+              <div class="price">
+                <b>R$ 19,00</b>
+                <button aria-label="Adicionar Mocha" data-action="add-product" data-index="7">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Comidas" data-price="17">
+            <div class="product-art">
+              <img alt="Pain au chocolat" src="assets/pain-au-chocolat.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Pain au chocolat</h3>
+              <small>Massa folhada · chocolate</small>
+              <div class="price">
+                <b>R$ 17,00</b>
+                <button aria-label="Adicionar Pain au chocolat" data-action="add-product" data-index="8">+</button>
+              </div>
+            </div>
+          </article>
+          <article data-cat="Comidas" data-price="23">
+            <div class="product-art">
+              <img alt="Affogato" src="assets/affogato.webp"/>
+            </div>
+            <div class="product-info">
+              <h3>Affogato</h3>
+              <small>Gelato de baunilha · espresso</small>
+              <div class="price">
+                <b>R$ 23,00</b>
+                <button aria-label="Adicionar Affogato" data-action="add-product" data-index="9">+</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="pedido" hidden>
+        <a class="back-menu" href="#menu">← Continuar escolhendo</a>
+        <h1>Meu carrinho</h1>
+        <div class="checkout-grid">
+          <div class="checkout-panel">
+            <h2>Seus produtos</h2>
+            <div id="checkout-lines">
+            </div>
+          </div>
+          <div class="checkout-panel">
+            <h2>Resumo do pedido</h2>
+            <div class="summary-row">
+              <span>Produtos</span>
+              <span id="subtotal">
+              </span>
+            </div>
+            <div class="summary-row grand">
+              <span>Total</span>
+              <strong id="grand-total">
+              </strong>
+            </div>
+            <form id="checkout">
+              <label>Nome para retirada<input name="nome" placeholder="Seu nome" required>
+              </label>
+              <button class="purchase-btn" type="submit">Confirmar pedido</button>
+            </form>
+            <p id="notice" role="status">
+            </p>
+            <small>Pedido demonstrativo, sem cobrança real.</small>
+          </div>
+        </div>
+      </section>
+      <section id="acompanhar" hidden>
+        <div class="track-head">
+          <span class="kicker">Oro Café · Seu momento</span>
+          <h1>Acompanhar pedido</h1>
+          <p>Enquanto preparamos seu café, aproveite nossos jogos.</p>
+        </div>
+        <div class="track-grid">
+          <div class="track-panel">
+            <h2>Seu pedido</h2>
+            <div id="track-status" aria-live="polite">
+            </div>
+          </div>
+          <div class="track-panel games-panel">
+            <span class="kicker">Oro Play</span>
+            <h2>Uma pausa divertida</h2>
+            <p>Escolha seu jogo enquanto o café fica pronto.</p>
+            <div class="game-switch" role="group" aria-label="Escolher jogo">
+              <button type="button" aria-pressed="true" data-action="choose-game" data-game="memory" id="pick-memory">Caça ao ouro</button>
+              <button type="button" aria-pressed="false" data-action="choose-game" data-game="snake" id="pick-snake">Cobrinha do café</button>
+            </div>
+            <div id="memory-game">
+              <h3>Caça ao ouro</h3>
+              <p>Vire duas cartas e encontre os pares de produtos da cafeteria.</p>
+              <div id="game-score" role="status">
+              </div>
+              <div id="treasure-board" class="treasure-board">
+              </div>
+              <button class="purchase-btn" data-action="new-memory">Jogar novamente</button>
+            </div>
+            <div id="snake-game" hidden>
+              <h3>Cobrinha do café</h3>
+              <p>Coma os grãos dourados sem bater nas paredes ou no próprio corpo.</p>
+              <div id="snake-score" role="status">Grãos: 0 · Recorde: 0</div>
+              <canvas id="snake-board" width="360" height="360" aria-label="Tabuleiro da cobrinha">
+              </canvas>
+              <div class="snake-actions">
+                <button id="snake-start" class="purchase-btn" data-action="start-snake">Começar</button>
+                <button class="game-secondary" data-action="pause-snake">Pausar</button>
+              </div>
+              <div class="snake-controls" aria-label="Controles da cobrinha">
+                <button data-action="turn-snake" data-x="0" data-y="-1" aria-label="Cima">↑</button>
+                <button data-action="turn-snake" data-x="-1" data-y="0" aria-label="Esquerda">←</button>
+                <button data-action="turn-snake" data-x="0" data-y="1" aria-label="Baixo">↓</button>
+                <button data-action="turn-snake" data-x="1" data-y="0" aria-label="Direita">→</button>
+              </div>
+              <p class="game-note">Use as setas do teclado, WASD ou os botões na tela.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-wrap">
+        <div class="footer-brand">
+          <img class="footer-logo" src="assets/logo.webp" alt="Oro Café"/>
+          <span class="kicker">CAFÉ &amp; PÂTISSERIE</span>
+          <p>O valor dos pequenos momentos.</p>
+        </div>
+        <div>
+          <h3>Explore</h3>
+          <a href="#inicio">Início</a>
+          <a href="#menu">Cardápio completo</a>
+        </div>
+        <div>
+          <h3>Sabores</h3>
+          <a href="#menu" data-action="select-category" data-category="Bebidas">Cafés &amp; bebidas</a>
+          <a href="#menu" data-action="select-category" data-category="Comidas">Confeitaria &amp; salgados</a>
+          <button class="footer-link" data-action="open-cart">Meu pedido</button>
+        </div>
+        <div>
+          <h3>Seu próximo ritual</h3>
+          <p>Escolha seus favoritos e monte seu pedido no cardápio digital.</p>
+          <a class="footer-cta" href="#menu">Explorar sabores <span>↗</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Oro Café · Projeto demonstrativo, sem cobrança real.</span>
+        <a href="#topo" data-action="scroll-top">Voltar ao topo ↑</a>
+      </div>
+    </footer>
+    <div id="page-wipe" aria-hidden="true">
+    </div>
+    <dialog id="order-confirm">
+      <div class="confirm-mark">✓</div>
+      <h2>Pedido recebido!</h2>
+      <p>Seu pedido será preparado com carinho. Acompanhe as próximas etapas e aproveite nossos jogos.</p>
+      <button class="purchase-btn" data-action="close-confirm">Continuar →</button>
+      <form method="dialog">
+        <button class="confirm-close">Fechar</button>
+      </form>
+    </dialog>
+    <dialog id="cart" aria-labelledby="mini-title">
+      <form method="dialog">
+        <button class="close-summary" aria-label="Fechar resumo">×</button>
+      </form>
+      <h2 id="mini-title">Minha sacola</h2>
+      <div id="lines">
+      </div>
+      <div class="summary-row grand">
+        <span>Total</span>
+        <strong id="total">
+        </strong>
+      </div>
+      <button id="go-checkout" class="purchase-btn" data-action="checkout">Finalizar compra →</button>
+    </dialog>
+  </body>
+</html>
