@@ -1,478 +1,478 @@
 // O cardápio é a fonte única dos nomes, preços e descrições.
-const productCards = [...document.querySelectorAll('#menu article')];
-const products = productCards.map(card =>  [
-card.querySelector('h3').textContent,
-Number(card.dataset.price),
-card.querySelector('small').textContent
+const cartoesProdutos = [...document.querySelectorAll('#menu article')];
+const produtos = cartoesProdutos.map(cartao =>  [
+cartao.querySelector('h3').textContent,
+Number(cartao.dataset.preco),
+cartao.querySelector('small').textContent
 ]);
-let cart={
+let carrinho={
 };
-const money=v => v.toLocaleString('pt-BR', {
+const formatarMoeda=valor => valor.toLocaleString('pt-BR', {
   style:'currency', currency:'BRL'
 });
-const addFeedbackTimers=new WeakMap();
+const temporizadoresConfirmacao=new WeakMap();
 // Carrinho: inclusão, quantidades e retorno visual.
-function add(i, button) {
-  cart[i]=(cart[i]||0)+1;
-  render();
-  if(!button)return;
-  clearTimeout(addFeedbackTimers.get(button));
-  button.classList.add('added');
-  button.textContent='✓';
-  button.setAttribute('aria-label', products[i][0]+' adicionado à sacola');
-  addFeedbackTimers.set(button, setTimeout(() => {
-    button.classList.remove('added');
-    button.textContent='+';
-    button.setAttribute('aria-label', 'Adicionar '+products[i][0]);
-    addFeedbackTimers.delete(button)
+function adicionarProduto(indice, botao) {
+  carrinho[indice]=(carrinho[indice]||0)+1;
+  atualizarCarrinho();
+  if(!botao)return;
+  clearTimeout(temporizadoresConfirmacao.get(botao));
+  botao.classList.add('adicionado');
+  botao.textContent='✓';
+  botao.setAttribute('aria-label', produtos[indice][0]+' adicionado à sacola');
+  temporizadoresConfirmacao.set(botao, setTimeout(() => {
+    botao.classList.remove('adicionado');
+    botao.textContent='+';
+    botao.setAttribute('aria-label', 'Adicionar '+produtos[indice][0]);
+    temporizadoresConfirmacao.delete(botao)
   }, 900))
 }
-function removeItem(i) {
-  if(--cart[i]<=0)delete cart[i];
-  render()
+function removerUnidade(indice) {
+  if(--carrinho[indice]<=0)delete carrinho[indice];
+  atualizarCarrinho()
 }
-const productImages=productCards.map(card => card.querySelector('img').src);
+const imagensProdutos=cartoesProdutos.map(cartao => cartao.querySelector('img').src);
 // Atualiza o resumo, o carrinho completo, os totais e o contador.
-function render() {
-  const entries=Object.entries(cart), sum=entries.reduce((s, [i, q]) => s+products[i][1]*q, 0);
-  const quantity=entries.reduce((s, [i, q]) => s+q, 0), badge=document.getElementById('count');
-  badge.textContent=quantity;
-  badge.hidden=quantity===0;
-  document.querySelector('.order-button').setAttribute('aria-label', quantity?'Abrir meu pedido, '+quantity+(quantity===1?' item':' itens'):'Abrir meu pedido, sacola vazia');
-  document.getElementById('lines').innerHTML=entries.map(([i, q]) => `<div class="mini-line"><img src="${productImages[i]}" alt=""><div>${products[i][0]}<small>Quantidade: ${q}</small></div><b>${money(products[i][1]*q)}</b></div>`).join('')||'Sua sacola está vazia.';
-  document.getElementById('checkout-lines').innerHTML=entries.map(([i, q]) => `<div class="checkout-line"><img src="${productImages[i]}" alt=""><div><b>${products[i][0]}</b><small>${money(products[i][1])} por unidade</small><div class="qty"><button data-action="decrease" data-index="${i}" aria-label="Diminuir quantidade">−</button><span>${q}</span><button data-action="increase" data-index="${i}" aria-label="Aumentar quantidade">+</button><button class="delete" data-action="remove" data-index="${i}">Remover</button></div></div><strong>${money(products[i][1]*q)}</strong></div>`).join('')||'Seu carrinho está vazio. Volte ao cardápio para escolher seus produtos.';
-  for(const id of ['total', 'subtotal', 'grand-total'])document.getElementById(id).textContent=money(sum);
-  document.getElementById('go-checkout').disabled=!entries.length;
-  document.querySelector('#checkout button').disabled=!entries.length
+function atualizarCarrinho() {
+  const itensCarrinho=Object.entries(carrinho), soma=itensCarrinho.reduce((acumulado, [indice, quantidade]) => acumulado+produtos[indice][1]*quantidade, 0);
+  const quantidade=itensCarrinho.reduce((acumulado, [indice, quantidade]) => acumulado+quantidade, 0), contador=document.getElementById('contador-sacola');
+  contador.textContent=quantidade;
+  contador.hidden=quantidade===0;
+  document.querySelector('.botao-sacola').setAttribute('aria-label', quantidade?'Abrir meu pedido, '+quantidade+(quantidade===1?' item':' itens'):'Abrir meu pedido, sacola vazia');
+  document.getElementById('itens-sacola').innerHTML=itensCarrinho.map(([indice, quantidade]) => `<div class="linha-sacola"><img src="${imagensProdutos[indice]}" alt=""><div>${produtos[indice][0]}<small>Quantidade: ${quantidade}</small></div><b>${formatarMoeda(produtos[indice][1]*quantidade)}</b></div>`).join('')||'Sua sacola está vazia.';
+  document.getElementById('itens-carrinho').innerHTML=itensCarrinho.map(([indice, quantidade]) => `<div class="linha-carrinho"><img src="${imagensProdutos[indice]}" alt=""><div><b>${produtos[indice][0]}</b><small>${formatarMoeda(produtos[indice][1])} por unidade</small><div class="quantidade"><button data-acao="diminuir" data-indice="${indice}" aria-label="Diminuir quantidade">−</button><span>${quantidade}</span><button data-acao="aumentar" data-indice="${indice}" aria-label="Aumentar quantidade">+</button><button class="remover-item" data-acao="remover" data-indice="${indice}">Remover</button></div></div><strong>${formatarMoeda(produtos[indice][1]*quantidade)}</strong></div>`).join('')||'Seu carrinho está vazio. Volte ao cardápio para escolher seus produtos.';
+  for(const id of ['total', 'subtotal', 'total-geral'])document.getElementById(id).textContent=formatarMoeda(soma);
+  document.getElementById('ir-carrinho').disabled=!itensCarrinho.length;
+  document.querySelector('#finalizar-pedido button').disabled=!itensCarrinho.length
 }
 // Abertura do resumo e navegação para a finalização.
-function openCart() {
-  render();
-  document.getElementById('cart').showModal()
+function abrirSacola() {
+  atualizarCarrinho();
+  document.getElementById('sacola').showModal()
 }
-function goCheckout() {
-  if(!Object.keys(cart).length)return;
-  document.getElementById('cart').close();
-  document.getElementById('notice').textContent='';
+function irParaCarrinho() {
+  if(!Object.keys(carrinho).length)return;
+  document.getElementById('sacola').close();
+  document.getElementById('aviso').textContent='';
   location.hash='pedido'
 }
 // Filtragem por categoria, inclusive em telas pequenas.
-function filterMenu(c, b) {
-  document.querySelectorAll('.filters button').forEach(x => {
-    x.classList.toggle('active', x===b);
-    x.setAttribute('aria-pressed', String(x===b))
+function filtrarCardapio(categoria, botao) {
+  document.querySelectorAll('.filtros button').forEach(x => {
+    x.classList.toggle('ativo', x===botao);
+    x.setAttribute('aria-pressed', String(x===botao))
   });
-  productCards.forEach(x => x.hidden=c!=='Todos'&&x.dataset.cat!==c)
+  cartoesProdutos.forEach(x => x.hidden=categoria!=='Todos'&&x.dataset.categoriaProduto!==categoria)
 }
-document.getElementById('checkout').onsubmit=e => {
-  e.preventDefault();
-  if(!Object.keys(cart).length)return;
-  lastOrder={
-    number:Date.now().toString().slice(-6), time:Date.now(), items:Object.entries(cart).map(([i, q]) => ({
-      name:products[i][0], q, price:products[i][1]
+document.getElementById('finalizar-pedido').onsubmit=evento => {
+  evento.preventDefault();
+  if(!Object.keys(carrinho).length)return;
+  ultimoPedido={
+    numero:Date.now().toString().slice(-6), horario:Date.now(), itens:Object.entries(carrinho).map(([indice, quantidade]) => ({
+      nome:produtos[indice][0], quantidade, preco:produtos[indice][1]
     }))
   };
-  cart={
+  carrinho={
   };
-  render();
-  e.target.reset();
-  pendingConfirmation=true;
-  updateTracking();
+  atualizarCarrinho();
+  evento.target.reset();
+  confirmacaoPendente=true;
+  atualizarAcompanhamento();
   location.hash='acompanhar'
 };
-function selectCategory(cat) {
-  const b=[...document.querySelectorAll('.filters button')].find(x => x.textContent===cat);
-  if(b)filterMenu(cat, b)
+function selecionarCategoria(categoria) {
+  const botao=[...document.querySelectorAll('.filtros button')].find(x => x.textContent===categoria);
+  if(botao)filtrarCardapio(categoria, botao)
 }
-document.querySelectorAll('#menu article').forEach((card, i) => {
-  card.tabIndex=0;
-  card.setAttribute('aria-label', products[i][0]+' — '+money(products[i][1]));
-  card.addEventListener('click', e => {
-    if(e.target.closest('button'))return;
-    const was=card.classList.contains('expanded');
-    document.querySelectorAll('#menu article.expanded').forEach(x => x.classList.remove('expanded'));
-    if(!was)card.classList.add('expanded')
+document.querySelectorAll('#menu article').forEach((cartao, indice) => {
+  cartao.tabIndex=0;
+  cartao.setAttribute('aria-label', produtos[indice][0]+' — '+formatarMoeda(produtos[indice][1]));
+  cartao.addEventListener('click', evento => {
+    if(evento.target.closest('button'))return;
+    const estavaExpandido=cartao.classList.contains('expandido');
+    document.querySelectorAll('#menu article.expandido').forEach(x => x.classList.remove('expandido'));
+    if(!estavaExpandido)cartao.classList.add('expandido')
   });
-  card.addEventListener('keydown', e => {
-    if(e.target!==card)return;
-    if(e.key==='Enter'||e.key===' ') {
-      e.preventDefault();
-      card.click()
-    }if(e.key==='Escape') {
-      card.classList.remove('expanded');
-      card.blur()
+  cartao.addEventListener('keydown', evento => {
+    if(evento.target!==cartao)return;
+    if(evento.key==='Enter'||evento.key===' ') {
+      evento.preventDefault();
+      cartao.click()
+    }if(evento.key==='Escape') {
+      cartao.classList.remove('expandido');
+      cartao.blur()
     }
   })
 });
-document.addEventListener('click', e => {
-  if(!e.target.closest('#menu article'))document.querySelectorAll('#menu article.expanded').forEach(x => x.classList.remove('expanded'))
+document.addEventListener('click', evento => {
+  if(!evento.target.closest('#menu article'))document.querySelectorAll('#menu article.expandido').forEach(x => x.classList.remove('expandido'))
 });
-render();
-let activeTab=null, transitionToken=0, wipeAnimation=null;
-let pendingConfirmation=false;
-function showConfirmation() {
-  if(pendingConfirmation&&activeTab==='acompanhar') {
-    pendingConfirmation=false;
-    document.getElementById('order-confirm').showModal()
+atualizarCarrinho();
+let telaAtual=null, controleTransicao=0, animacaoTransicao=null;
+let confirmacaoPendente=false;
+function mostrarConfirmacao() {
+  if(confirmacaoPendente&&telaAtual==='acompanhar') {
+    confirmacaoPendente=false;
+    document.getElementById('confirmacao-pedido').showModal()
   }
 }
 // Navegação interna por hash e transição circular.
-function showTab() {
-  const target=['inicio', 'menu', 'pedido', 'acompanhar'].includes(location.hash.slice(1))?location.hash.slice(1):'inicio';
-  const apply=() => {
-    for(const id of ['inicio', 'menu', 'pedido', 'acompanhar'])document.getElementById(id).hidden=id!==target;
-    document.querySelectorAll('[data-tab]').forEach(a => {
-      if(a.dataset.tab===target)a.setAttribute('aria-current', 'page');
-      else a.removeAttribute('aria-current')
+function mostrarTela() {
+  const telaDestino=['inicio', 'menu', 'pedido', 'acompanhar'].includes(location.hash.slice(1))?location.hash.slice(1):'inicio';
+  const aplicarTela=() => {
+    for(const id of ['inicio', 'menu', 'pedido', 'acompanhar'])document.getElementById(id).hidden=id!==telaDestino;
+    document.querySelectorAll('[data-tela]').forEach(link => {
+      if(link.dataset.tela===telaDestino)link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current')
     });
     window.scrollTo({
       top:0, behavior:'instant'
     });
-    activeTab=target;
-    if(target==='acompanhar')updateTracking()
+    telaAtual=telaDestino;
+    if(telaDestino==='acompanhar')atualizarAcompanhamento()
   };
-  const token=++transitionToken;
-  const wipe=document.getElementById('page-wipe');
-  if(wipeAnimation)wipeAnimation.cancel();
-  if(activeTab===null||activeTab===target||matchMedia('(prefers-reduced-motion: reduce)').matches||!wipe.animate) {
-    wipe.classList.remove('wiping');
-    apply();
-    showConfirmation();
+  const controle=++controleTransicao;
+  const transicao=document.getElementById('transicao-tela');
+  if(animacaoTransicao)animacaoTransicao.cancel();
+  if(telaAtual===null||telaAtual===telaDestino||matchMedia('(prefers-reduced-motion: reduce)').matches||!transicao.animate) {
+    transicao.classList.remove('transicionando');
+    aplicarTela();
+    mostrarConfirmacao();
     return
   }
-  const r=document.querySelector('header .brand').getBoundingClientRect(), x=r.left+r.width/2, y=r.top+r.height/2;
-  const radius=Math.hypot(Math.max(x, innerWidth-x), Math.max(y, innerHeight-y))+40;
-  const start=`circle(0px at ${x}px ${y}px)`, end=`circle(${radius}px at ${x}px ${y}px)`;
-  wipe.classList.add('wiping');
-  wipeAnimation=wipe.animate([{
-    clipPath:start
+  const retangulo=document.querySelector('header .marca').getBoundingClientRect(), x=retangulo.left+retangulo.width/2, y=retangulo.top+retangulo.height/2;
+  const raio=Math.hypot(Math.max(x, innerWidth-x), Math.max(y, innerHeight-y))+40;
+  const inicioCirculo=`circle(0px at ${x}px ${y}px)`, fimCirculo=`circle(${raio}px at ${x}px ${y}px)`;
+  transicao.classList.add('transicionando');
+  animacaoTransicao=transicao.animate([{
+    clipPath:inicioCirculo
   }, {
-    clipPath:end
+    clipPath:fimCirculo
   }], {
     duration:430, easing:'cubic-bezier(.55,.05,.3,1)', fill:'forwards'
   });
-  wipeAnimation.onfinish=() => {
-    if(token!==transitionToken)return;
-    apply();
-    wipeAnimation=wipe.animate([{
-      clipPath:end
+  animacaoTransicao.onfinish=() => {
+    if(controle!==controleTransicao)return;
+    aplicarTela();
+    animacaoTransicao=transicao.animate([{
+      clipPath:fimCirculo
     }, {
-      clipPath:start
+      clipPath:inicioCirculo
     }], {
       duration:470, easing:'cubic-bezier(.3,.1,.2,1)', fill:'forwards'
     });
-    wipeAnimation.onfinish=() => {
-      if(token===transitionToken) {
-        wipe.classList.remove('wiping');
-        wipeAnimation.cancel();
-        wipeAnimation=null;
-        showConfirmation()
+    animacaoTransicao.onfinish=() => {
+      if(controle===controleTransicao) {
+        transicao.classList.remove('transicionando');
+        animacaoTransicao.cancel();
+        animacaoTransicao=null;
+        mostrarConfirmacao()
       }
     }
   }
 }
-let lastOrder=null;
+let ultimoPedido=null;
 // Acompanhamento demonstrativo do último pedido.
-function updateTracking() {
-  const el=document.getElementById('track-status');
-  if(!lastOrder) {
-    el.innerHTML='<p>Nenhum pedido confirmado ainda.</p><a class="cta" href="#menu">Explorar cardápio →</a>';
+function atualizarAcompanhamento() {
+  const elemento=document.getElementById('situacao-pedido');
+  if(!ultimoPedido) {
+    elemento.innerHTML='<p>Nenhum pedido confirmado ainda.</p><a class="link-destaque" href="#menu">Explorar cardápio →</a>';
     return
   }
-  const elapsed=Date.now()-lastOrder.time, stage=elapsed>=120000?2:elapsed>=20000?1:0;
-  el.innerHTML=`<p>Pedido #${lastOrder.number} · Simulação</p>`+['Pedido recebido', 'Em preparo', 'Pronto para retirada'].map((name, i) => `<div class="track-step ${i<=stage?'done':'pending'}"><span>${i<=stage?'✓':i+1}</span>${name}</div>`).join('')+lastOrder.items.map(i => `<p>${i.q} × ${i.name}</p>`).join('')+`<strong>Total: ${money(lastOrder.items.reduce((sum,i)=>sum+i.q*i.price,0))}</strong><p><small>Status demonstrativo, não conectado à cafeteria.</small></p>`
+  const tempoDecorrido=Date.now()-ultimoPedido.horario, etapa=tempoDecorrido>=120000?2:tempoDecorrido>=20000?1:0;
+  elemento.innerHTML=`<p>Pedido #${ultimoPedido.numero} · Simulação</p>`+['Pedido recebido', 'Em preparo', 'Pronto para retirada'].map((nome, indice) => `<div class="etapa-pedido ${indice<=etapa?'concluida':'pendente'}"><span>${indice<=etapa?'✓':indice+1}</span>${nome}</div>`).join('')+ultimoPedido.itens.map(indice => `<p>${indice.quantidade} × ${indice.nome}</p>`).join('')+`<strong>Total: ${formatarMoeda(ultimoPedido.itens.reduce((soma,indice)=>soma+indice.quantidade*indice.preco,0))}</strong><p><small>Status demonstrativo, não conectado à cafeteria.</small></p>`
 }
-let memoryDeck=[], memoryOpen=[], memoryPairs=0, memoryMoves=0, memoryLock=false, memoryRound=0, selectedGame='memory';
+let baralhoMemoria=[], cartasViradas=[], paresEncontrados=0, jogadasMemoria=0, memoriaBloqueada=false, rodadaMemoria=0, jogoSelecionado='memoria';
 // Oro Play: alternância entre os jogos.
-function chooseGame(game) {
-  selectedGame=game;
-  document.getElementById('memory-game').hidden=game!=='memory';
-  document.getElementById('snake-game').hidden=game!=='snake';
-  for(const name of ['memory', 'snake'])document.getElementById('pick-'+name).setAttribute('aria-pressed', String(name===game));
-  if(game!=='snake')pauseSnake();
-  else drawSnake()
+function escolherJogo(jogo) {
+  jogoSelecionado=jogo;
+  document.getElementById('jogo-memoria').hidden=jogo!=='memoria';
+  document.getElementById('jogo-cobrinha').hidden=jogo!=='cobrinha';
+  for(const nome of ['memoria', 'cobrinha'])document.getElementById('escolher-'+nome).setAttribute('aria-pressed', String(nome===jogo));
+  if(jogo!=='cobrinha')pausarCobrinha();
+  else desenharCobrinha()
 }
 // Jogo da memória: embaralhamento e formação de pares.
-function newGame() {
-  memoryRound++;
-  memoryDeck=[0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7];
-  for(let i=memoryDeck.length-1; i>0; i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [memoryDeck[i], memoryDeck[j]]=[memoryDeck[j], memoryDeck[i]]
-  }memoryOpen=[];
-  memoryPairs=0;
-  memoryMoves=0;
-  memoryLock=false;
-  const board=document.getElementById('treasure-board');
-  board.replaceChildren();
-  memoryDeck.forEach((value, i) => {
-    const b=document.createElement('button');
-    b.type='button';
-    b.innerHTML='<span class="memory-mark">ORO<small>CAFÉ</small></span>';
-    b.setAttribute('aria-label', 'Virar carta '+(i+1));
-    b.onclick=() => flipMemory(i, b);
-    board.appendChild(b)
+function reiniciarMemoria() {
+  rodadaMemoria++;
+  baralhoMemoria=[0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7];
+  for(let indice=baralhoMemoria.length-1; indice>0; indice--) {
+    const indiceSorteado=Math.floor(Math.random()*(indice+1));
+    [baralhoMemoria[indice], baralhoMemoria[indiceSorteado]]=[baralhoMemoria[indiceSorteado], baralhoMemoria[indice]]
+  }cartasViradas=[];
+  paresEncontrados=0;
+  jogadasMemoria=0;
+  memoriaBloqueada=false;
+  const tabuleiro=document.getElementById('tabuleiro-memoria');
+  tabuleiro.replaceChildren();
+  baralhoMemoria.forEach((valor, indice) => {
+    const botao=document.createElement('button');
+    botao.type='button';
+    botao.innerHTML='<span class="marca-carta">ORO<small>CAFÉ</small></span>';
+    botao.setAttribute('aria-label', 'Virar carta '+(indice+1));
+    botao.onclick=() => virarCarta(indice, botao);
+    tabuleiro.appendChild(botao)
   });
-  scoreGame()
+  atualizarPlacarMemoria()
 }
-function flipMemory(i, b) {
-  if(memoryLock||b.disabled||memoryOpen.some(x => x.i===i))return;
-  const value=memoryDeck[i];
-  b.classList.add('revealed');
-  const img=document.createElement('img');
-  img.src=productImages[value];
-  img.alt=products[value][0];
-  b.replaceChildren(img);
-  b.setAttribute('aria-label', products[value][0]);
-  memoryOpen.push({
-    i, b, value
+function virarCarta(indice, botao) {
+  if(memoriaBloqueada||botao.disabled||cartasViradas.some(x => x.indice===indice))return;
+  const valor=baralhoMemoria[indice];
+  botao.classList.add('revelada');
+  const imagem=document.createElement('img');
+  imagem.src=imagensProdutos[valor];
+  imagem.alt=produtos[valor][0];
+  botao.replaceChildren(imagem);
+  botao.setAttribute('aria-label', produtos[valor][0]);
+  cartasViradas.push({
+    indice, botao, valor
   });
-  if(memoryOpen.length!==2)return;
-  memoryMoves++;
-  const [a, c]=memoryOpen;
-  if(a.value===c.value) {
-    for(const x of memoryOpen) {
-      x.b.classList.add('found');
-      x.b.disabled=true;
-      x.b.setAttribute('aria-label', products[x.value][0]+' — par encontrado')
-    }memoryPairs++;
-    memoryOpen=[];
-    scoreGame();
+  if(cartasViradas.length!==2)return;
+  jogadasMemoria++;
+  const [primeiraCarta, segundaCarta]=cartasViradas;
+  if(primeiraCarta.valor===segundaCarta.valor) {
+    for(const x of cartasViradas) {
+      x.botao.classList.add('encontrado');
+      x.botao.disabled=true;
+      x.botao.setAttribute('aria-label', produtos[x.valor][0]+' — par encontrado')
+    }paresEncontrados++;
+    cartasViradas=[];
+    atualizarPlacarMemoria();
     return
-  }memoryLock=true;
-  const round=memoryRound;
-  scoreGame();
+  }memoriaBloqueada=true;
+  const rodada=rodadaMemoria;
+  atualizarPlacarMemoria();
   setTimeout(() => {
-    if(round!==memoryRound)return;
-    for(const x of memoryOpen) {
-      x.b.classList.remove('revealed');
-      x.b.innerHTML='<span class="memory-mark">ORO<small>CAFÉ</small></span>';
-      x.b.setAttribute('aria-label', 'Virar carta '+(x.i+1))
-    }memoryOpen=[];
-    memoryLock=false
+    if(rodada!==rodadaMemoria)return;
+    for(const x of cartasViradas) {
+      x.botao.classList.remove('revelada');
+      x.botao.innerHTML='<span class="marca-carta">ORO<small>CAFÉ</small></span>';
+      x.botao.setAttribute('aria-label', 'Virar carta '+(x.indice+1))
+    }cartasViradas=[];
+    memoriaBloqueada=false
   }, 850)
 }
-function scoreGame() {
-  document.getElementById('game-score').textContent=memoryPairs===8?`Parabéns! Todos os 8 pares em ${memoryMoves} jogadas.`:`Pares: ${memoryPairs}/8 · Jogadas: ${memoryMoves}`
+function atualizarPlacarMemoria() {
+  document.getElementById('placar-memoria').textContent=paresEncontrados===8?`Parabéns! Todos os 8 pares em ${jogadasMemoria} jogadas.`:`Pares: ${paresEncontrados}/8 · Jogadas: ${jogadasMemoria}`
 }
-const snakeCanvas=document.getElementById('snake-board'), snakeCtx=snakeCanvas.getContext('2d'), snakeN=18, snakeCell=20;
-let snakeBody=[], snakeDir={
+const quadroCobrinha=document.getElementById('tabuleiro-cobrinha'), contextoCobrinha=quadroCobrinha.getContext('2d'), tamanhoGrade=18, tamanhoCelula=20;
+let corpoCobrinha=[], direcaoAtual={
   x:1, y:0
-}, snakeNext={
+}, proximaDirecao={
   x:1, y:0
-}, snakeFood=null, snakeTimer=null, snakeState='idle', snakePoints=0, snakeBest=0;
+}, grao=null, temporizadorCobrinha=null, estadoCobrinha='aguardando', pontosCobrinha=0, recordeCobrinha=0;
 try {
-  snakeBest=Number(localStorage.getItem('oro-snake-best'))||0
-} catch(e) {
+  recordeCobrinha=Number(localStorage.getItem('oro-snake-best'))||0
+} catch(evento) {
 };
 // Cobrinha: posicionamento do grão em uma célula livre.
-function placeBean() {
-  const free=[];
-  for(let y=0; y<snakeN; y++)for(let x=0; x<snakeN; x++)if(!snakeBody.some(p => p.x===x&&p.y===y))free.push({
+function posicionarGrao() {
+  const celulasLivres=[];
+  for(let y=0; y<tamanhoGrade; y++)for(let x=0; x<tamanhoGrade; x++)if(!corpoCobrinha.some(posicao => posicao.x===x&&posicao.y===y))celulasLivres.push({
     x, y
   });
-  snakeFood=free.length?free[Math.floor(Math.random()*free.length)]:null
+  grao=celulasLivres.length?celulasLivres[Math.floor(Math.random()*celulasLivres.length)]:null
 }
-function resetSnake() {
-  snakeBody=[{
+function reiniciarCobrinha() {
+  corpoCobrinha=[{
     x:8, y:9
   }, {
     x:7, y:9
   }, {
     x:6, y:9
   }];
-  snakeDir={
+  direcaoAtual={
     x:1, y:0
   };
-  snakeNext={
+  proximaDirecao={
     x:1, y:0
   };
-  snakePoints=0;
-  placeBean()
+  pontosCobrinha=0;
+  posicionarGrao()
 }
 // Desenho do jogo em canvas.
-function drawSnake() {
-  const c=snakeCtx;
-  c.fillStyle='#061426';
-  c.fillRect(0, 0, 360, 360);
-  c.strokeStyle='#142c43';
-  c.lineWidth=.5;
-  for(let i=0; i<=snakeN; i++) {
-    c.beginPath();
-    c.moveTo(i*20, 0);
-    c.lineTo(i*20, 360);
-    c.moveTo(0, i*20);
-    c.lineTo(360, i*20);
-    c.stroke()
-  }snakeBody.forEach((p, i) => {
-    c.fillStyle=i===0?'#f5cf8a':'#b78a42';
-    c.fillRect(p.x*20+2, p.y*20+2, 16, 16);
-    if(i===0) {
-      c.fillStyle='#061426';
-      c.fillRect(p.x*20+6, p.y*20+5, 3, 3);
-      c.fillRect(p.x*20+11, p.y*20+5, 3, 3)
+function desenharCobrinha() {
+  const contexto=contextoCobrinha;
+  contexto.fillStyle='#061426';
+  contexto.fillRect(0, 0, 360, 360);
+  contexto.strokeStyle='#142c43';
+  contexto.lineWidth=.5;
+  for(let indice=0; indice<=tamanhoGrade; indice++) {
+    contexto.beginPath();
+    contexto.moveTo(indice*20, 0);
+    contexto.lineTo(indice*20, 360);
+    contexto.moveTo(0, indice*20);
+    contexto.lineTo(360, indice*20);
+    contexto.stroke()
+  }corpoCobrinha.forEach((posicao, indice) => {
+    contexto.fillStyle=indice===0?'#f5cf8a':'#b78a42';
+    contexto.fillRect(posicao.x*20+2, posicao.y*20+2, 16, 16);
+    if(indice===0) {
+      contexto.fillStyle='#061426';
+      contexto.fillRect(posicao.x*20+6, posicao.y*20+5, 3, 3);
+      contexto.fillRect(posicao.x*20+11, posicao.y*20+5, 3, 3)
     }
   });
-  if(snakeFood) {
-    c.save();
-    c.translate(snakeFood.x*20+10, snakeFood.y*20+10);
-    c.rotate(.55);
-    c.fillStyle='#e7b96a';
-    c.beginPath();
-    c.ellipse(0, 0, 6, 8, 0, 0, Math.PI*2);
-    c.fill();
-    c.strokeStyle='#704c24';
-    c.beginPath();
-    c.moveTo(0, -6);
-    c.quadraticCurveTo(4, 0, 0, 6);
-    c.stroke();
-    c.restore()
-  }if(snakeState!=='running') {
-    c.fillStyle='#061426c9';
-    c.fillRect(0, 140, 360, 80);
-    c.fillStyle='#e7b96a';
-    c.font='22px Georgia';
-    c.textAlign='center';
-    c.fillText(({
-      idle:'Pronto para jogar?', paused:'Pausa para o café', over:'Fim de jogo', won:'Todos os grãos!'
-    })[snakeState]||'', 180, 185)
+  if(grao) {
+    contexto.save();
+    contexto.translate(grao.x*20+10, grao.y*20+10);
+    contexto.rotate(.55);
+    contexto.fillStyle='#e7b96a';
+    contexto.beginPath();
+    contexto.ellipse(0, 0, 6, 8, 0, 0, Math.PI*2);
+    contexto.fill();
+    contexto.strokeStyle='#704c24';
+    contexto.beginPath();
+    contexto.moveTo(0, -6);
+    contexto.quadraticCurveTo(4, 0, 0, 6);
+    contexto.stroke();
+    contexto.restore()
+  }if(estadoCobrinha!=='jogando') {
+    contexto.fillStyle='#061426c9';
+    contexto.fillRect(0, 140, 360, 80);
+    contexto.fillStyle='#e7b96a';
+    contexto.font='22px Georgia';
+    contexto.textAlign='center';
+    contexto.fillText(({
+      aguardando:'Pronto para jogar?', pausada:'Pausa para o café', encerrada:'Fim de jogo', vitoria:'Todos os grãos!'
+    })[estadoCobrinha]||'', 180, 185)
   }
-  document.getElementById('snake-score').textContent=`Grãos: ${snakePoints} · Recorde: ${snakeBest}`;
-  document.getElementById('snake-start').textContent=snakeState==='paused'?'Continuar':snakeState==='running'?'Reiniciar':snakeState==='idle'?'Começar':'Jogar novamente'
+  document.getElementById('placar-cobrinha').textContent=`Grãos: ${pontosCobrinha} · Recorde: ${recordeCobrinha}`;
+  document.getElementById('iniciar-cobrinha').textContent=estadoCobrinha==='pausada'?'Continuar':estadoCobrinha==='jogando'?'Reiniciar':estadoCobrinha==='aguardando'?'Começar':'Jogar novamente'
 }
-function startSnake() {
-  clearInterval(snakeTimer);
-  if(snakeState!=='paused')resetSnake();
-  snakeState='running';
-  drawSnake();
-  snakeTimer=setInterval(tickSnake, 145)
+function iniciarCobrinha() {
+  clearInterval(temporizadorCobrinha);
+  if(estadoCobrinha!=='pausada')reiniciarCobrinha();
+  estadoCobrinha='jogando';
+  desenharCobrinha();
+  temporizadorCobrinha=setInterval(avancarCobrinha, 145)
 }
-function pauseSnake() {
-  if(snakeState==='running') {
-    clearInterval(snakeTimer);
-    snakeTimer=null;
-    snakeState='paused';
-    drawSnake()
+function pausarCobrinha() {
+  if(estadoCobrinha==='jogando') {
+    clearInterval(temporizadorCobrinha);
+    temporizadorCobrinha=null;
+    estadoCobrinha='pausada';
+    desenharCobrinha()
   }
 }
-function endSnake(state) {
-  clearInterval(snakeTimer);
-  snakeTimer=null;
-  snakeState=state;
-  drawSnake()
+function encerrarCobrinha(estado) {
+  clearInterval(temporizadorCobrinha);
+  temporizadorCobrinha=null;
+  estadoCobrinha=estado;
+  desenharCobrinha()
 }
-function turnSnake(x, y) {
-  if(snakeState!=='running')return;
-  if(x===-snakeDir.x&&y===-snakeDir.y)return;
-  snakeNext={
+function direcionarCobrinha(x, y) {
+  if(estadoCobrinha!=='jogando')return;
+  if(x===-direcaoAtual.x&&y===-direcaoAtual.y)return;
+  proximaDirecao={
     x, y
   }
 }
 // Atualização da cobrinha, colisões e pontuação.
-function tickSnake() {
-  snakeDir=snakeNext;
-  const head={
-    x:snakeBody[0].x+snakeDir.x, y:snakeBody[0].y+snakeDir.y
+function avancarCobrinha() {
+  direcaoAtual=proximaDirecao;
+  const cabeca={
+    x:corpoCobrinha[0].x+direcaoAtual.x, y:corpoCobrinha[0].y+direcaoAtual.y
   };
-  const eat=snakeFood&&head.x===snakeFood.x&&head.y===snakeFood.y;
-  const body=eat?snakeBody:snakeBody.slice(0, -1);
-  if(head.x<0||head.y<0||head.x>=snakeN||head.y>=snakeN||body.some(p => p.x===head.x&&p.y===head.y)) {
-    endSnake('over');
+  const comeuGrao=grao&&cabeca.x===grao.x&&cabeca.y===grao.y;
+  const corpo=comeuGrao?corpoCobrinha:corpoCobrinha.slice(0, -1);
+  if(cabeca.x<0||cabeca.y<0||cabeca.x>=tamanhoGrade||cabeca.y>=tamanhoGrade||corpo.some(posicao => posicao.x===cabeca.x&&posicao.y===cabeca.y)) {
+    encerrarCobrinha('encerrada');
     return
-  }snakeBody.unshift(head);
-  if(eat) {
-    snakePoints++;
-    if(snakePoints>snakeBest) {
-      snakeBest=snakePoints;
+  }corpoCobrinha.unshift(cabeca);
+  if(comeuGrao) {
+    pontosCobrinha++;
+    if(pontosCobrinha>recordeCobrinha) {
+      recordeCobrinha=pontosCobrinha;
       try {
-        localStorage.setItem('oro-snake-best', snakeBest)
-      } catch(e) {
+        localStorage.setItem('oro-snake-best', recordeCobrinha)
+      } catch(evento) {
       }
-    }placeBean();
-    if(!snakeFood) {
-      endSnake('won');
+    }posicionarGrao();
+    if(!grao) {
+      encerrarCobrinha('vitoria');
       return
     }
-  } else snakeBody.pop();
-  drawSnake()
+  } else corpoCobrinha.pop();
+  desenharCobrinha()
 }
-resetSnake();
-drawSnake();
-document.addEventListener('keydown', e => {
-  if(activeTab!=='acompanhar'||selectedGame!=='snake'||snakeState!=='running'||document.querySelector('dialog[open]')||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
-  const d={
+reiniciarCobrinha();
+desenharCobrinha();
+document.addEventListener('keydown', evento => {
+  if(telaAtual!=='acompanhar'||jogoSelecionado!=='cobrinha'||estadoCobrinha!=='jogando'||document.querySelector('dialog[open]')||/INPUT|TEXTAREA|SELECT/.test(evento.target.tagName))return;
+  const direcao={
     ArrowUp:[0, -1], w:[0, -1], ArrowDown:[0, 1], s:[0, 1], ArrowLeft:[-1, 0], a:[-1, 0], ArrowRight:[1, 0], d:[1, 0]
-  }[e.key];
-  if(d) {
-    e.preventDefault();
-    turnSnake(...d)
+  }[evento.key];
+  if(direcao) {
+    evento.preventDefault();
+    direcionarCobrinha(...direcao)
   }
 });
 window.addEventListener('hashchange', () => {
-  if(location.hash!=='#acompanhar')pauseSnake()
+  if(location.hash!=='#acompanhar')pausarCobrinha()
 });
 document.addEventListener('visibilitychange', () => {
-  if(document.hidden)pauseSnake()
+  if(document.hidden)pausarCobrinha()
 });
-newGame();
+reiniciarMemoria();
 setInterval(() => {
-  if(activeTab==='acompanhar'&&lastOrder)updateTracking()
+  if(telaAtual==='acompanhar'&&ultimoPedido)atualizarAcompanhamento()
 }, 1000);
-window.addEventListener('hashchange', showTab);
-showTab();
+window.addEventListener('hashchange', mostrarTela);
+mostrarTela();
 // Fecha a sacola ao clicar fora de seus limites, sem afetar os controles internos.
-const miniCart = document.getElementById('cart');
-let startedOutside = false;
-function outsideCart(e) {
-  const r = miniCart.getBoundingClientRect();
-  return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+const resumoSacola = document.getElementById('sacola');
+let cliqueIniciadoFora = false;
+function foraDaSacola(evento) {
+  const retangulo = resumoSacola.getBoundingClientRect();
+  return evento.clientX < retangulo.left || evento.clientX > retangulo.right || evento.clientY < retangulo.top || evento.clientY > retangulo.bottom;
 }
-miniCart.addEventListener('pointerdown', e =>  {
-  startedOutside = e.target === miniCart && outsideCart(e);
+resumoSacola.addEventListener('pointerdown', evento =>  {
+  cliqueIniciadoFora = evento.target === resumoSacola && foraDaSacola(evento);
 });
-miniCart.addEventListener('click', e =>  {
-  if (startedOutside && e.target === miniCart && outsideCart(e)) miniCart.close();
-  startedOutside = false;
+resumoSacola.addEventListener('click', evento =>  {
+  if (cliqueIniciadoFora && evento.target === resumoSacola && foraDaSacola(evento)) resumoSacola.close();
+  cliqueIniciadoFora = false;
 });
-miniCart.addEventListener('close', () =>  {
-  startedOutside = false;
+resumoSacola.addEventListener('close', () =>  {
+  cliqueIniciadoFora = false;
 });
 // Eventos da interface: os botões declaram sua ação no HTML.
-document.addEventListener('click', event =>  {
-  const button = event.target.closest('[data-action]');
-  if (!button) return;
-  const index = Number(button.dataset.index);
-  switch (button.dataset.action) {
-    case 'add-product': add(index, button);
+document.addEventListener('click', evento =>  {
+  const botao = evento.target.closest('[data-acao]');
+  if (!botao) return;
+  const indice = Number(botao.dataset.indice);
+  switch (botao.dataset.acao) {
+    case 'adicionar-produto': adicionarProduto(indice, botao);
     break;
-    case 'increase': add(index);
+    case 'aumentar': adicionarProduto(indice);
     break;
-    case 'decrease': removeItem(index);
+    case 'diminuir': removerUnidade(indice);
     break;
-    case 'remove': delete cart[index];
-    render();
+    case 'remover': delete carrinho[indice];
+    atualizarCarrinho();
     break;
-    case 'open-cart': openCart();
+    case 'abrir-sacola': abrirSacola();
     break;
-    case 'checkout': goCheckout();
+    case 'finalizar-pedido': irParaCarrinho();
     break;
-    case 'filter': filterMenu(button.dataset.category, button);
+    case 'filtrar': filtrarCardapio(botao.dataset.categoria, botao);
     break;
-    case 'select-category': selectCategory(button.dataset.category);
+    case 'selecionar-categoria': selecionarCategoria(botao.dataset.categoria);
     break;
-    case 'choose-game': chooseGame(button.dataset.game);
+    case 'escolher-jogo': escolherJogo(botao.dataset.jogo);
     break;
-    case 'new-memory': newGame();
+    case 'reiniciar-memoria': reiniciarMemoria();
     break;
-    case 'start-snake': startSnake();
+    case 'iniciar-cobrinha': iniciarCobrinha();
     break;
-    case 'pause-snake': pauseSnake();
+    case 'pausar-cobrinha': pausarCobrinha();
     break;
-    case 'turn-snake': turnSnake(Number(button.dataset.x), Number(button.dataset.y));
+    case 'direcionar-cobrinha': direcionarCobrinha(Number(botao.dataset.x), Number(botao.dataset.y));
     break;
-    case 'close-confirm': document.getElementById('order-confirm').close();
+    case 'fechar-confirmacao': document.getElementById('confirmacao-pedido').close();
     break;
-    case 'scroll-top': event.preventDefault();
+    case 'voltar-topo': evento.preventDefault();
     window.scrollTo({
       top:0, behavior:'smooth'
     });

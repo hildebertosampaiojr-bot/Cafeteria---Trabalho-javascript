@@ -11,277 +11,277 @@
   </head>
   <body>
     <header>
-      <a class="brand" href="#inicio">
-        <img class="header-logo" src="assets/logo.webp" alt="Oro Café"/>
+      <a class="marca" href="#inicio">
+        <img class="logo-cabecalho" src="assets/logo.webp" alt="Oro Café"/>
       </a>
       <nav aria-label="Navegação principal">
-        <a data-tab="inicio" href="#inicio">Início</a>
-        <a data-tab="menu" href="#menu">Cardápio</a>
-        <a data-tab="acompanhar" href="#acompanhar">Acompanhar pedido</a>
+        <a data-tela="inicio" href="#inicio">Início</a>
+        <a data-tela="menu" href="#menu">Cardápio</a>
+        <a data-tela="acompanhar" href="#acompanhar">Acompanhar pedido</a>
       </nav>
-      <button class="order-button" data-action="open-cart" aria-label="Abrir meu pedido">
-        <span class="bag-wrap">
+      <button class="botao-sacola" data-acao="abrir-sacola" aria-label="Abrir meu pedido">
+        <span class="envoltorio-sacola">
           <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 8h14l1.5 13h-17L5 8z"/>
             <path d="M9 9V6a3 3 0 0 1 6 0v3"/>
           </svg>
-          <span id="count" aria-live="polite" hidden>0</span>
+          <span id="contador-sacola" aria-live="polite" hidden>0</span>
         </span>
       </button>
     </header>
     <main>
-      <section class="hero" id="inicio">
-        <div class="hero-logo">
-          <img class="main-logo" src="assets/logo.webp" alt="Oro Café"/>
+      <section class="apresentacao" id="inicio">
+        <div class="logo-apresentacao">
+          <img class="logo-principal" src="assets/logo.webp" alt="Oro Café"/>
         </div>
-        <div class="story">
-          <span class="kicker">Nossa história · O valor dos pequenos momentos</span>
+        <div class="historia">
+          <span class="chamada">Nossa história · O valor dos pequenos momentos</span>
           <h1>Há ouro nos<em> pequenos momentos.</em>
           </h1>
           <p>O Oro Café nasceu de uma ideia simples: transformar a pausa de todos os dias em algo extraordinário. Tudo começou com o aroma de um café recém-passado e a vontade de criar um lugar onde o tempo pudesse desacelerar.</p>
           <p>Inspirados pela riqueza dos grãos brasileiros e pela delicadeza da confeitaria artesanal, imaginamos uma casa onde cada xícara conta uma história e cada encontro merece ser celebrado.</p>
           <p>Hoje, convidamos você a descobrir o sabor desses pequenos tesouros. Sua próxima pausa começa aqui.</p>
-          <a class="cta" href="#menu">Conheça nosso cardápio <span>→</span>
+          <a class="link-destaque" href="#menu">Conheça nosso cardápio <span>→</span>
           </a>
         </div>
       </section>
       <section id="menu" hidden>
-        <div class="section-head">
-          <div class="menu-heading">
-            <img class="menu-logo" src="assets/logo.webp" alt="Oro Café"/>
+        <div class="cabecalho-secao">
+          <div class="titulo-cardapio">
+            <img class="logo-cardapio" src="assets/logo.webp" alt="Oro Café"/>
             <h2>Nosso cardápio</h2>
-            <div class="ornament">
+            <div class="ornamento">
               <span>❦</span>
             </div>
           </div>
-          <div class="filters">
-            <button class="active" aria-pressed="true" data-action="filter" data-category="Todos">Todos</button>
-            <button aria-pressed="false" data-action="filter" data-category="Bebidas">Bebidas</button>
-            <button aria-pressed="false" data-action="filter" data-category="Comidas">Comidas</button>
+          <div class="filtros">
+            <button class="ativo" aria-pressed="true" data-acao="filtrar" data-categoria="Todos">Todos</button>
+            <button aria-pressed="false" data-acao="filtrar" data-categoria="Bebidas">Bebidas</button>
+            <button aria-pressed="false" data-acao="filtrar" data-categoria="Comidas">Comidas</button>
           </div>
         </div>
-        <p class="menu-hint">Passe o mouse ou toque em um produto para descobrir seu sabor.</p>
-        <div class="menu">
-          <article data-cat="Comidas" data-price="12">
-            <div class="product-art">
+        <p class="dica-cardapio">Passe o mouse ou toque em um produto para descobrir seu sabor.</p>
+        <div class="grade-cardapio">
+          <article data-categoria-produto="Comidas" data-preco="12">
+            <div class="imagem-produto">
               <img alt="Brownie" src="assets/brownie.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Brownie</h3>
               <small>Chocolate intenso</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 12,00</b>
-                <button aria-label="Adicionar Brownie" data-action="add-product" data-index="0">+</button>
+                <button aria-label="Adicionar Brownie" data-acao="adicionar-produto" data-indice="0">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Comidas" data-price="14">
-            <div class="product-art">
+          <article data-categoria-produto="Comidas" data-preco="14">
+            <div class="imagem-produto">
               <img alt="Croissant" src="assets/croissant.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Croissant</h3>
               <small>Manteiga · artesanal</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 14,00</b>
-                <button aria-label="Adicionar Croissant" data-action="add-product" data-index="1">+</button>
+                <button aria-label="Adicionar Croissant" data-acao="adicionar-produto" data-indice="1">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Comidas" data-price="22">
-            <div class="product-art">
+          <article data-categoria-produto="Comidas" data-preco="22">
+            <div class="imagem-produto">
               <img alt="Cheesecake" src="assets/cheesecake.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Cheesecake</h3>
               <small>Frutas vermelhas</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 22,00</b>
-                <button aria-label="Adicionar Cheesecake" data-action="add-product" data-index="2">+</button>
+                <button aria-label="Adicionar Cheesecake" data-acao="adicionar-produto" data-indice="2">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Bebidas" data-price="15">
-            <div class="product-art">
+          <article data-categoria-produto="Bebidas" data-preco="15">
+            <div class="imagem-produto">
               <img alt="Cappuccino" src="assets/cappuccino.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Cappuccino</h3>
               <small>Cremoso · canela</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 15,00</b>
-                <button aria-label="Adicionar Cappuccino" data-action="add-product" data-index="3">+</button>
+                <button aria-label="Adicionar Cappuccino" data-acao="adicionar-produto" data-indice="3">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Bebidas" data-price="18">
-            <div class="product-art">
+          <article data-categoria-produto="Bebidas" data-preco="18">
+            <div class="imagem-produto">
               <img alt="Latte gelado de baunilha" src="assets/latte-gelado-de-baunilha.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Latte gelado de baunilha</h3>
               <small>Café · leite · gelo</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 18,00</b>
-                <button aria-label="Adicionar Latte gelado de baunilha" data-action="add-product" data-index="4">+</button>
+                <button aria-label="Adicionar Latte gelado de baunilha" data-acao="adicionar-produto" data-indice="4">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Comidas" data-price="24">
-            <div class="product-art">
+          <article data-categoria-produto="Comidas" data-preco="24">
+            <div class="imagem-produto">
               <img alt="Brioche com ovos" src="assets/brioche-com-ovos.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Brioche com ovos</h3>
               <small>Ovos cremosos · queijo</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 24,00</b>
-                <button aria-label="Adicionar Brioche com ovos" data-action="add-product" data-index="5">+</button>
+                <button aria-label="Adicionar Brioche com ovos" data-acao="adicionar-produto" data-indice="5">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Bebidas" data-price="9">
-            <div class="product-art">
+          <article data-categoria-produto="Bebidas" data-preco="9">
+            <div class="imagem-produto">
               <img alt="Espresso" src="assets/espresso.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Espresso</h3>
               <small>Café intenso · crema</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 9,00</b>
-                <button aria-label="Adicionar Espresso" data-action="add-product" data-index="6">+</button>
+                <button aria-label="Adicionar Espresso" data-acao="adicionar-produto" data-indice="6">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Bebidas" data-price="19">
-            <div class="product-art">
+          <article data-categoria-produto="Bebidas" data-preco="19">
+            <div class="imagem-produto">
               <img alt="Mocha" src="assets/mocha.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Mocha</h3>
               <small>Chocolate · espresso · leite</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 19,00</b>
-                <button aria-label="Adicionar Mocha" data-action="add-product" data-index="7">+</button>
+                <button aria-label="Adicionar Mocha" data-acao="adicionar-produto" data-indice="7">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Comidas" data-price="17">
-            <div class="product-art">
+          <article data-categoria-produto="Comidas" data-preco="17">
+            <div class="imagem-produto">
               <img alt="Pain au chocolat" src="assets/pain-au-chocolat.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Pain au chocolat</h3>
               <small>Massa folhada · chocolate</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 17,00</b>
-                <button aria-label="Adicionar Pain au chocolat" data-action="add-product" data-index="8">+</button>
+                <button aria-label="Adicionar Pain au chocolat" data-acao="adicionar-produto" data-indice="8">+</button>
               </div>
             </div>
           </article>
-          <article data-cat="Comidas" data-price="23">
-            <div class="product-art">
+          <article data-categoria-produto="Comidas" data-preco="23">
+            <div class="imagem-produto">
               <img alt="Affogato" src="assets/affogato.webp"/>
             </div>
-            <div class="product-info">
+            <div class="informacoes-produto">
               <h3>Affogato</h3>
               <small>Gelato de baunilha · espresso</small>
-              <div class="price">
+              <div class="preco">
                 <b>R$ 23,00</b>
-                <button aria-label="Adicionar Affogato" data-action="add-product" data-index="9">+</button>
+                <button aria-label="Adicionar Affogato" data-acao="adicionar-produto" data-indice="9">+</button>
               </div>
             </div>
           </article>
         </div>
       </section>
       <section id="pedido" hidden>
-        <a class="back-menu" href="#menu">← Continuar escolhendo</a>
+        <a class="voltar-cardapio" href="#menu">← Continuar escolhendo</a>
         <h1>Meu carrinho</h1>
-        <div class="checkout-grid">
-          <div class="checkout-panel">
+        <div class="grade-carrinho">
+          <div class="painel-carrinho">
             <h2>Seus produtos</h2>
-            <div id="checkout-lines">
+            <div id="itens-carrinho">
             </div>
           </div>
-          <div class="checkout-panel">
+          <div class="painel-carrinho">
             <h2>Resumo do pedido</h2>
-            <div class="summary-row">
+            <div class="linha-resumo">
               <span>Produtos</span>
               <span id="subtotal">
               </span>
             </div>
-            <div class="summary-row grand">
+            <div class="linha-resumo total-geral">
               <span>Total</span>
-              <strong id="grand-total">
+              <strong id="total-geral">
               </strong>
             </div>
-            <form id="checkout">
+            <form id="finalizar-pedido">
               <label>Nome para retirada<input name="nome" placeholder="Seu nome" required>
               </label>
-              <button class="purchase-btn" type="submit">Confirmar pedido</button>
+              <button class="botao-compra" type="submit">Confirmar pedido</button>
             </form>
-            <p id="notice" role="status">
+            <p id="aviso" role="status">
             </p>
             <small>Pedido demonstrativo, sem cobrança real.</small>
           </div>
         </div>
       </section>
       <section id="acompanhar" hidden>
-        <div class="track-head">
-          <span class="kicker">Oro Café · Seu momento</span>
+        <div class="cabecalho-acompanhamento">
+          <span class="chamada">Oro Café · Seu momento</span>
           <h1>Acompanhar pedido</h1>
           <p>Enquanto preparamos seu café, aproveite nossos jogos.</p>
         </div>
-        <div class="track-grid">
-          <div class="track-panel">
+        <div class="grade-acompanhamento">
+          <div class="painel-acompanhamento">
             <h2>Seu pedido</h2>
-            <div id="track-status" aria-live="polite">
+            <div id="situacao-pedido" aria-live="polite">
             </div>
           </div>
-          <div class="track-panel games-panel">
-            <span class="kicker">Oro Play</span>
+          <div class="painel-acompanhamento painel-jogos">
+            <span class="chamada">Oro Play</span>
             <h2>Uma pausa divertida</h2>
             <p>Escolha seu jogo enquanto o café fica pronto.</p>
-            <div class="game-switch" role="group" aria-label="Escolher jogo">
-              <button type="button" aria-pressed="true" data-action="choose-game" data-game="memory" id="pick-memory">Caça ao ouro</button>
-              <button type="button" aria-pressed="false" data-action="choose-game" data-game="snake" id="pick-snake">Cobrinha do café</button>
+            <div class="seletor-jogos" role="group" aria-label="Escolher jogo">
+              <button type="button" aria-pressed="true" data-acao="escolher-jogo" data-jogo="memoria" id="escolher-memoria">Caça ao ouro</button>
+              <button type="button" aria-pressed="false" data-acao="escolher-jogo" data-jogo="cobrinha" id="escolher-cobrinha">Cobrinha do café</button>
             </div>
-            <div id="memory-game">
+            <div id="jogo-memoria">
               <h3>Caça ao ouro</h3>
               <p>Vire duas cartas e encontre os pares de produtos da cafeteria.</p>
-              <div id="game-score" role="status">
+              <div id="placar-memoria" role="status">
               </div>
-              <div id="treasure-board" class="treasure-board">
+              <div id="tabuleiro-memoria" class="tabuleiro-memoria">
               </div>
-              <button class="purchase-btn" data-action="new-memory">Jogar novamente</button>
+              <button class="botao-compra" data-acao="reiniciar-memoria">Jogar novamente</button>
             </div>
-            <div id="snake-game" hidden>
+            <div id="jogo-cobrinha" hidden>
               <h3>Cobrinha do café</h3>
               <p>Coma os grãos dourados sem bater nas paredes ou no próprio corpo.</p>
-              <div id="snake-score" role="status">Grãos: 0 · Recorde: 0</div>
-              <canvas id="snake-board" width="360" height="360" aria-label="Tabuleiro da cobrinha">
+              <div id="placar-cobrinha" role="status">Grãos: 0 · Recorde: 0</div>
+              <canvas id="tabuleiro-cobrinha" width="360" height="360" aria-label="Tabuleiro da cobrinha">
               </canvas>
-              <div class="snake-actions">
-                <button id="snake-start" class="purchase-btn" data-action="start-snake">Começar</button>
-                <button class="game-secondary" data-action="pause-snake">Pausar</button>
+              <div class="acoes-cobrinha">
+                <button id="iniciar-cobrinha" class="botao-compra" data-acao="iniciar-cobrinha">Começar</button>
+                <button class="botao-secundario-jogo" data-acao="pausar-cobrinha">Pausar</button>
               </div>
-              <div class="snake-controls" aria-label="Controles da cobrinha">
-                <button data-action="turn-snake" data-x="0" data-y="-1" aria-label="Cima">↑</button>
-                <button data-action="turn-snake" data-x="-1" data-y="0" aria-label="Esquerda">←</button>
-                <button data-action="turn-snake" data-x="0" data-y="1" aria-label="Baixo">↓</button>
-                <button data-action="turn-snake" data-x="1" data-y="0" aria-label="Direita">→</button>
+              <div class="controles-cobrinha" aria-label="Controles da cobrinha">
+                <button data-acao="direcionar-cobrinha" data-x="0" data-y="-1" aria-label="Cima">↑</button>
+                <button data-acao="direcionar-cobrinha" data-x="-1" data-y="0" aria-label="Esquerda">←</button>
+                <button data-acao="direcionar-cobrinha" data-x="0" data-y="1" aria-label="Baixo">↓</button>
+                <button data-acao="direcionar-cobrinha" data-x="1" data-y="0" aria-label="Direita">→</button>
               </div>
-              <p class="game-note">Use as setas do teclado, WASD ou os botões na tela.</p>
+              <p class="dica-jogo">Use as setas do teclado, WASD ou os botões na tela.</p>
             </div>
           </div>
         </div>
       </section>
     </main>
     <footer>
-      <div class="footer-wrap">
-        <div class="footer-brand">
-          <img class="footer-logo" src="assets/logo.webp" alt="Oro Café"/>
-          <span class="kicker">CAFÉ &amp; PÂTISSERIE</span>
+      <div class="conteudo-rodape">
+        <div class="marca-rodape">
+          <img class="logo-rodape" src="assets/logo.webp" alt="Oro Café"/>
+          <span class="chamada">CAFÉ &amp; PÂTISSERIE</span>
           <p>O valor dos pequenos momentos.</p>
         </div>
         <div>
@@ -291,46 +291,46 @@
         </div>
         <div>
           <h3>Sabores</h3>
-          <a href="#menu" data-action="select-category" data-category="Bebidas">Cafés &amp; bebidas</a>
-          <a href="#menu" data-action="select-category" data-category="Comidas">Confeitaria &amp; salgados</a>
-          <button class="footer-link" data-action="open-cart">Meu pedido</button>
+          <a href="#menu" data-acao="selecionar-categoria" data-categoria="Bebidas">Cafés &amp; bebidas</a>
+          <a href="#menu" data-acao="selecionar-categoria" data-categoria="Comidas">Confeitaria &amp; salgados</a>
+          <button class="link-rodape" data-acao="abrir-sacola">Meu pedido</button>
         </div>
         <div>
           <h3>Seu próximo ritual</h3>
           <p>Escolha seus favoritos e monte seu pedido no cardápio digital.</p>
-          <a class="footer-cta" href="#menu">Explorar sabores <span>↗</span>
+          <a class="destaque-rodape" href="#menu">Explorar sabores <span>↗</span>
           </a>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="base-rodape">
         <span>© 2026 Oro Café · Projeto demonstrativo, sem cobrança real.</span>
-        <a href="#topo" data-action="scroll-top">Voltar ao topo ↑</a>
+        <a href="#topo" data-acao="voltar-topo">Voltar ao topo ↑</a>
       </div>
     </footer>
-    <div id="page-wipe" aria-hidden="true">
+    <div id="transicao-tela" aria-hidden="true">
     </div>
-    <dialog id="order-confirm">
-      <div class="confirm-mark">✓</div>
+    <dialog id="confirmacao-pedido">
+      <div class="sinal-confirmacao">✓</div>
       <h2>Pedido recebido!</h2>
       <p>Seu pedido será preparado com carinho. Acompanhe as próximas etapas e aproveite nossos jogos.</p>
-      <button class="purchase-btn" data-action="close-confirm">Continuar →</button>
+      <button class="botao-compra" data-acao="fechar-confirmacao">Continuar →</button>
       <form method="dialog">
-        <button class="confirm-close">Fechar</button>
+        <button class="fechar-confirmacao">Fechar</button>
       </form>
     </dialog>
-    <dialog id="cart" aria-labelledby="mini-title">
+    <dialog id="sacola" aria-labelledby="titulo-sacola">
       <form method="dialog">
-        <button class="close-summary" aria-label="Fechar resumo">×</button>
+        <button class="fechar-resumo" aria-label="Fechar resumo">×</button>
       </form>
-      <h2 id="mini-title">Minha sacola</h2>
-      <div id="lines">
+      <h2 id="titulo-sacola">Minha sacola</h2>
+      <div id="itens-sacola">
       </div>
-      <div class="summary-row grand">
+      <div class="linha-resumo total-geral">
         <span>Total</span>
         <strong id="total">
         </strong>
       </div>
-      <button id="go-checkout" class="purchase-btn" data-action="checkout">Finalizar compra →</button>
+      <button id="ir-carrinho" class="botao-compra" data-acao="finalizar-pedido">Finalizar compra →</button>
     </dialog>
   </body>
 </html>

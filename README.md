@@ -179,9 +179,9 @@ Abra `index.html` em um navegador atualizado ou utilize a extensão Live Server 
 
 ## 🔧 Manutenção e evolução
 
-- **Produtos:** edite os cartões do cardápio em `cafeteria-oro.html`, mantendo a categoria, descrição, imagem, preço exibido e atributo `data-price` consistentes. O JavaScript lê os dados desses cartões.
+- **Produtos:** edite os cartões do cardápio em `cafeteria-oro.html`, mantendo a categoria, descrição, imagem, preço exibido e atributo `data-preco` consistentes. O JavaScript lê os dados desses cartões.
 - **Visual:** ajuste a paleta, os componentes e os pontos de quebra em `estilo.css`.
-- **Interações:** altere as funções correspondentes em `script.js`. Os principais botões usam atributos `data-action`.
+- **Interações:** altere as funções correspondentes em `script.js`. Os principais botões usam atributos `data-acao`. As funções, variáveis, classes, identificadores e atributos personalizados do projeto têm nomes em português. Palavras reservadas e APIs nativas mantêm a sintaxe original.
 - **Imagens:** utilize arquivos na pasta `assets/` e atualize os caminhos no HTML.
 
 Possíveis melhorias futuras incluem integração com backend, catálogo dinâmico, persistência de pedidos e painel administrativo.
