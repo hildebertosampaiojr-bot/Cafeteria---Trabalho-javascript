@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f0e7">
+  <meta name="description" content="Café passado com calma, pão de queijo quentinho e um lugar para respirar.">
+  <title>Grão de Afeto | Cafeteria</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="barra">
+      <a class="marca" href="#inicio" aria-label="Grão de Afeto, início">
+        <span class="marca-simbolo" aria-hidden="true">g.</span>
+        <span>grão <span class="marca-leve">de afeto</span></span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a href="#cardapio">Cardápio</a>
+        <a href="#sobre">A casa</a>
+      </nav>
+      <a class="atalho-sacola" href="#pedido">
+        <span>Sua sacola</span>
+        <span class="contador" id="contador-pedido" aria-label="0 itens no pedido">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-texto">
+        <p class="etiqueta"><span></span> CAFÉ, CONVERSA E CALMA</p>
+        <h1>Seu dia merece<br>uma pausa <em>boa.</em></h1>
+        <p class="hero-descricao">Um café passado sem pressa, um doce feito hoje e aquele cantinho que já parece seu.</p>
+        <a class="botao botao-escuro" href="#cardapio">Pedir uma pausa <span aria-hidden="true">↗</span></a>
+        <p class="hero-nota"><span aria-hidden="true">✳</span> Feito na casa, todos os dias.</p>
+      </div>
+      <div class="hero-arte" role="img" aria-label="Ilustração de uma xícara de café sobre uma mesa">
+        <div class="sol"></div>
+        <span class="arte-estrela estrela-um" aria-hidden="true">✳</span>
+        <span class="arte-estrela estrela-dois" aria-hidden="true">✦</span>
+        <div class="prato"></div>
+        <div class="xicara">
+          <div class="cafe"></div>
+          <span class="xicara-marca">g.</span>
+          <span class="asa"></span>
+        </div>
+        <span class="arte-legenda">um gole<br>de cada vez</span>
+      </div>
+    </section>
+
+    <section class="faixa" aria-label="Nosso jeito de fazer">
+      <p><span>01</span> Café moído na hora</p>
+      <p><span>02</span> Receita de família</p>
+      <p><span>03</span> Sem pressa, sempre</p>
+    </section>
+
+    <section class="secao cardapio" id="cardapio">
+      <div class="titulo-secao">
+        <div>
+          <p class="etiqueta">DA NOSSA COZINHA</p>
+          <h2>O que vai ser<br><em>hoje?</em></h2>
+        </div>
+        <p>Coisas simples, feitas direito.<br>Escolha uma categoria ou procure seu favorito.</p>
+      </div>
+      <div class="ferramentas-cardapio">
+        <div class="filtros" role="group" aria-label="Filtrar cardápio">
+          <button class="filtro ativo" type="button" data-categoria="todos" aria-pressed="true">Tudo</button>
+          <button class="filtro" type="button" data-categoria="cafes" aria-pressed="false">Cafés</button>
+          <button class="filtro" type="button" data-categoria="comidinhas" aria-pressed="false">Comidinhas</button>
+          <button class="filtro" type="button" data-categoria="gelados" aria-pressed="false">Leves & gelados</button>
+        </div>
+        <label class="busca">
+          <span aria-hidden="true">⌕</span>
+          <span class="sr-only">Buscar no cardápio</span>
+          <input id="busca-cardapio" type="search" placeholder="O que deu vontade?" autocomplete="off">
+        </label>
+      </div>
+      <div class="lista-cardapio" id="lista-cardapio" aria-live="polite"></div>
+      <p id="sem-resultados" class="sem-resultados" hidden>Não achei esse no cardápio. Tente outra busca.</p>
+    </section>
+
+    <section class="pedido-secao" id="pedido">
+      <div class="pedido-wrap">
+        <div class="pedido-intro">
+          <p class="etiqueta etiqueta-clara">A PARTE BOA</p>
+          <h2>Vai querer<br><em>mais um?</em></h2>
+          <p>Monte seu pedido por aqui — ele fica guardado neste navegador enquanto você escolhe.</p>
+          <div class="status-loja">
+            <span class="status-ponto" id="status-ponto"></span>
+            <span id="texto-status" aria-live="polite">Estamos abertos. Chega mais!</span>
+            <button id="alternar-status" type="button">Fechar a casa</button>
+          </div>
+        </div>
+
+        <div class="sacola">
+          <div class="sacola-topo">
+            <div>
+              <p class="etiqueta">NA SUA MESA</p>
+              <h3>Seu pedido <span id="quantidade-itens">(0)</span></h3>
+            </div>
+            <button id="limpar-pedido" class="botao-limpar" type="button">Limpar sacola</button>
+          </div>
+          <p id="pedido-vazio" class="pedido-vazio">A sacola está vazia por enquanto.<br><a href="#cardapio">Dar uma olhada no cardápio ↗</a></p>
+          <form id="form-pedido" class="form-pedido" novalidate>
+            <label for="item-pedido">Ou monte o pedido por aqui</label>
+            <div class="form-pedido-campos">
+              <select id="item-pedido" name="item" required>
+                <option value="">Escolha um item</option>
+              </select>
+              <input id="quantidade" name="quantidade" type="number" min="1" max="20" step="1" placeholder="Qtd." aria-label="Quantidade, de 1 a 20" required>
+              <button type="submit" aria-label="Adicionar item escolhido">Adicionar</button>
+            </div>
+          </form>
+          <ul id="itens-pedido" class="itens-pedido" aria-live="polite"></ul>
+          <div class="sacola-rodape">
+            <p>Subtotal <strong id="total-pedido">R$ 0,00</strong></p>
+            <p class="nota-sacola">É só uma simulação de pedido, sem pagamento.</p>
+          </div>
+          <p id="erro-pedido" class="mensagem erro" role="alert"></p>
+          <p id="mensagem-pedido" class="mensagem sucesso" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sobre" id="sobre">
+      <div class="sobre-selo" aria-hidden="true">desde<br><strong>cedo</strong></div>
+      <div class="sobre-texto">
+        <p class="etiqueta">A CASA É SUA</p>
+        <h2>Feito por gente.<br>Para gente.</h2>
+        <p>A gente acredita que café bom não precisa de cerimônia — só de cuidado. O Grão de Afeto é uma cafeteria inventada para este projeto, mas o carinho é de verdade.</p>
+      </div>
+      <div class="visita">
+        <p class="etiqueta">QUANDO APARECER</p>
+        <p class="visita-horario">Todo dia<br><strong>9h — 18h</strong></p>
+        <p>Rua das Flores, 42<br>Um endereço inventado, por enquanto.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="marca" href="#inicio"><span class="marca-simbolo" aria-hidden="true">g.</span><span>grão <span class="marca-leve">de afeto</span></span></a>
+    <p>Uma pausa pequena, um carinho grande.</p>
+    <a href="#inicio">Voltar para cima ↑</a>
+  </footer>
+</body>
+</html>
